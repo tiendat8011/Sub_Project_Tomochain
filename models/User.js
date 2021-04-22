@@ -1,3 +1,4 @@
+const { json } = require('body-parser');
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 let userSchema = new Schema({
@@ -10,6 +11,10 @@ let userSchema = new Schema({
       required: true
    },
    password: {
+      type: String,
+      required: true
+   },
+   address:{
       type: String,
       required: true
    }
