@@ -7,7 +7,7 @@ const createWalletV2 = async (password, amount = 0.01) => {
   const amountToSend = web3.utils.toWei(amount + '', 'ether')
 
   await web3.eth.sendTransaction({
-    from: '0xA4f767f079c3ADC174bb2107aE9eE1A3c08413ee',
+    from: '0xb2d6e4Eef37CC13BC2cB21fc8C28a68e087bce9c',
     to: newWallet,
     value: amountToSend
   })

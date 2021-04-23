@@ -12,8 +12,14 @@ const contractOwner = process.env.CONTRACT_OWNER
 const getBalanceOfAddress = async address => {
   const Token = await new web3.eth.Contract(contractABI, contractAddress);
   console.log(address)
-  const b = await Token.methods.balanceOf(address).call()
-  console.log(b);
+  try {
+    const b = await Token.methods.balanceOf(address).call()
+    console.log(b);
+  } catch (error) {
+    console.log(error)
+  }
+  // const b = await Token.methods.balanceOf(address).call()
+  // console.log(b);
 
   return await Token.methods.balanceOf(address).call()
 }
@@ -41,7 +47,14 @@ const transferToken = async (sender, senderPassword, receiver, amount) => {
 const mintToken = async (receiver, amount) => {
   const Token = await new web3.eth.Contract(contractABI, contractAddress)
 
-  console.log('mintoken')
+  console.log(Token.methods)
+  try {
+    const c = await Token.methods
+    .mint(receiver, amount)
+    .send({ from: contractOwner })
+  } catch (error) {
+    console.log(error)
+  }
   return await Token.methods
     .mint(receiver, amount)
     .send({ from: contractOwner })

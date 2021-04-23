@@ -8,6 +8,7 @@ const web3 = new Web3('http://localhost:7545');
 
 const { createWalletV2, } = require('../helper/wallet');
 const { getBalanceOfAddress, transferToken, mintToken } = require('../helper/contract')
+
 require('dotenv').config()
 
 
@@ -53,7 +54,7 @@ exports.signup = (req, res, next) => {
 
                     const newPrivateAccount = await createWalletV2(password);
                     console.log(newPrivateAccount);
-                    const minToken1 = await mintToken(newPrivateAccount, 50);
+                   const minToken1 = await mintToken(newPrivateAccount, 50);
                     console.log('6');
     
 
@@ -184,7 +185,6 @@ exports.tradeToken = async (req, res) => {
         const vAmount = parseInt(amount, 10)
 
         const response = await transferToken(senderAddress, senderPassword, receiverAddress, amount)
-
         res.json({
             transactionHash: response.transactionHash,
             status: response.status
