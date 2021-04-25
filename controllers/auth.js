@@ -180,11 +180,14 @@ exports.signin = (req, res) => {
 
 exports.tradeToken = async (req, res) => {
     try {
+        console.log(req.body)
         const { senderAddress, password: senderPassword, address: receiverAddress, amount } = req.body
 
         const vAmount = parseInt(amount, 10)
+        const existingUser = await User.findOne({ email: receiverAddress })
+        console.log(existingUser.address);
 
-        const response = await transferToken(senderAddress, senderPassword, receiverAddress, amount)
+        const response = await transferToken(senderAddress, senderPassword, existingUser.address, amount)
         res.json({
             transactionHash: response.transactionHash,
             status: response.status
@@ -192,6 +195,11 @@ exports.tradeToken = async (req, res) => {
     } catch (error) {
         res.status(400)
     }
+}
+exports.getUser = (req, res) =>{
+    User.find()
+    .then(users => res.json(users))
+    .catch(err => res.status(404).json({ nobooksfound: 'No Users found' }));
 }
 
 exports.mintToken = async (req, res) => {
@@ -211,7 +219,6 @@ exports.mintToken = async (req, res) => {
 exports.getBalance = async (req, res) => {
     try {
         const { address } = req.body
-        console.log(req.body);
 
         const balance = await getBalanceOfAddress(address);
         res.json(balance)

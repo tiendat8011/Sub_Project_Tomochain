@@ -1,13 +1,17 @@
 const Web3 = require('web3')
 const web3 = new Web3('http://localhost:7545')
 
+const contractAddress = process.env.CONTRACT_ADDRESS
+
+const contractOwner = process.env.CONTRACT_OWNER
+
 const createWalletV2 = async (password, amount = 0.01) => {
   const newWallet = await web3.eth.personal.newAccount(password)
 
   const amountToSend = web3.utils.toWei(amount + '', 'ether')
 
   await web3.eth.sendTransaction({
-    from: '0xb2d6e4Eef37CC13BC2cB21fc8C28a68e087bce9c',
+    from: contractOwner,
     to: newWallet,
     value: amountToSend
   })
